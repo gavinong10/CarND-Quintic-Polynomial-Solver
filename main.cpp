@@ -39,7 +39,7 @@ vector<double> JMT(vector< double> start, vector <double> end, double T)
 	VectorXd alpha(6);
 	alpha(0) = start[0];
 	alpha(1) = start[1];
-	alpha(2) = 0.5 * start[0];
+	alpha(2) = 0.5 * start[2];
 
 	VectorXd X(3);
 	X << 		end[0] - (start[0] + start[1] * T + 0.5 * start[2] * T * T),
@@ -47,9 +47,9 @@ vector<double> JMT(vector< double> start, vector <double> end, double T)
 				end[2] - start[2];
 
 	MatrixXd T_matrix(3, 3);
-	T_matrix << 		pow(T, 3), pow(T, 4), pow(T, 5),
-						3 * pow(T, 2), 4 * pow(T, 3), 5 * pow(T, 4),
-						6 * T, 12 * pow(T, 2), 20 * pow(T, 3);
+	T_matrix <<	T*T*T, T*T*T*T, T*T*T*T*T,
+			    3*T*T, 4*T*T*T,5*T*T*T*T,
+			    6*T, 12*T*T, 20*T*T*T;
 
 	alpha.tail(3) = T_matrix.inverse() * X;
 
